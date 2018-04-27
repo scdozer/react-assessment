@@ -14,8 +14,14 @@ class Single extends Component {
           <div className={this.props.completed ? 'completed' : ''}>
             {this.props.title}
           </div>
-          <button className="remove" onClick={()=> this.props.remove(this.props.id)}>Remove</button>
-          <button disabled={this.props.completed} onClick={()=> this.props.completeTask(this.props.id)}>Complete</button>
+
+          <button className="remove"
+            onClick={()=> this.props.remove(this.props.id)}>
+            Remove</button>
+
+          <button disabled={this.props.completed}
+            onClick={()=> this.props.completeTask(this.props.id)}>
+            Complete</button>
       </li>
     )
   }

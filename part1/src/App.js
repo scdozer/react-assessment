@@ -41,13 +41,12 @@ class App extends Component {
     }
 
 
-    add = () =>{
+    add = () => {
       if (this.state.newToDo.title !== ""){
           axios.post(`https://practiceapi.devmountain.com/api/tasks/`, {title : this.state.newToDo.title} ).then( res =>{
             console.log('res', res)
             let newToDoList = Object.assign({}, this.state.toDoList);
             newToDoList = res.data;
-
             this.setState({
               toDoList: newToDoList,
               newToDo : {
@@ -59,7 +58,7 @@ class App extends Component {
           })
         }}
 
-   remove = (id) =>{
+   remove = (id) => {
      axios.delete(`https://practiceapi.devmountain.com/api/tasks/${id}`).then( res =>{
        let newToDoList = Object.assign({}, this.state.toDoList);
        newToDoList = res.data;
@@ -71,44 +70,48 @@ class App extends Component {
            complete: false,
            id: ""
          }
+       })
      })
+   }
 
-   })}
-
-   complete = (id) =>{
-     axios.put(`https://practiceapi.devmountain.com/api/tasks/${id}`, 'completed').then( res =>{
-       console.log('ressComplete', res)
+   complete = (id) => {
+     axios.put(`https://practiceapi.devmountain.com/api/tasks/${id}`, 'completed')
+     .then( res =>{
        let newCompleted = Object.assign({}, this.state.toDoList);
        newCompleted = res.data;
        this.setState({
          toDoList: newCompleted
+       })
      })
-     console.log('state', this.state)
-
-   })}
+   }
 
 
   render() {
     return (
       <div className="wrapper">
-
+        <h1>To Do's</h1>
         <div className="form">
           <input
             name="title"
-            value={this.state.newToDo.title}
+            value={this.state.newToDo.title ? this.state.newToDo.title : ""}
             placeholder="Title"
             onChange={this.handleChange}
             />
-          <button onClick={() => this.add()}>
-              +
-          </button>
+          <button onClick={() => this.add()}>+</button>
         </div>
 
         <div className="list">
           <ul>
             {this.state.toDoList.map(item =>{
               return(
-                <Single title = {item.title} completed = {item.completed} completeTask = {this.complete} id={item.id}  remove={this.remove} key={item.id}/>
+                <Single
+                  title = {item.title}
+                  completed = {item.completed}
+                  id={item.id}
+                  key={item.id}
+                  completeTask = {this.complete}
+                  remove={this.remove}
+                />
               )
             })}
           </ul>
